@@ -99,6 +99,16 @@ case "$1" in
 
 		if [ $# -gt 0 ]
 		then
+			if [ ! -f `which $1` ] ; then
+				echo "Binary $1 does not exist."
+				exit 1
+			fo
+
+			if [ ! -z $(uname|grep Darwin) ] && [ ! -z $(ls -lO `which $1`|awk '{print $5}'|grep restricted) ] ; then
+				echo "Binary $1 is restricted, tsocks won't work."
+				exit 1
+			fi
+
 			exec "$@"
 		fi
 	;;
